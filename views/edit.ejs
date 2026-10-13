@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post | My Blog</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Edit Blog Post</h1>
+        <p>Update your blog post below.</p>
+    </header>
+
+    <main>
+        <section class="create-section">
+            <h2>Edit Post</h2>
+
+            <form action="/posts/edit/<%= post.blog_id %>" method="POST">
+                <label for="title">Blog Title</label>
+                <input type="text" id="title" name="title"
+                       value="<%= post.title %>" maxlength="255" required>
+
+                <label for="content">Blog Content</label>
+                <textarea id="content" name="content" rows="8"
+                          required><%= post.body %></textarea>
+
+                <div class="edit-actions">
+                    <button type="submit" class="create-button">
+                        Save Changes
+                    </button>
+                    <a href="/" class="cancel-button">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Blog Application • Node.js + Express + EJS</p>
+    </footer>
+</body>
+</html>

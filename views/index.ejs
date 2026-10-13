@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Blog</h1>
+        <p>My personal blog powered by Node.js, Express, EJS, and PostgreSQL</p>
+
+        <% if (user) { %>
+            <p class="welcome-user">
+                Signed in as <strong><%= user.name %></strong>
+            </p>
+
+            <form action="/logout" method="POST" class="header-form">
+                <button type="submit" class="header-button">Sign Out</button>
+            </form>
+        <% } else { %>
+            <nav class="auth-nav">
+                <a href="/login">Sign In</a>
+                <a href="/signup">Create Account</a>
+            </nav>
+        <% } %>
+    </header>
+
+    <main>
+        <% if (message) { %>
+            <p class="success-message"><%= message %></p>
+        <% } %>
+
+        <% if (user) { %>
+            <section class="create-section">
+                <h2>Create a New Post</h2>
+
+                <form action="/posts" method="POST">
+                    <label for="title">Blog Title</label>
+                    <input type="text" id="title" name="title"
+                           maxlength="255" placeholder="Enter your blog title"
+                           required>
+
+                    <label for="content">Blog Content</label>
+                    <textarea id="content" name="content" rows="6"
+                              placeholder="Write your blog post..."
+                              required></textarea>
+
+                    <button type="submit" class="create-button">
+                        Publish Post
+                    </button>
+                </form>
+            </section>
+        <% } else { %>
+            <section class="create-section">
+                <h2>Welcome to My Blog</h2>
+                <p>Sign in or create an account to publish your own posts.</p>
+                <p class="auth-link">
+                    <a href="/login">Sign in</a> or
+                    <a href="/signup">create an account</a>.
+                </p>
+            </section>
+        <% } %>
+
+        <section class="posts-section">
+            <h2>Blog Posts</h2>
+
+            <% if (posts.length === 0) { %>
+                <p class="no-posts">No blog posts yet. Create the first one!</p>
+            <% } %>
+
+            <% posts.forEach(post => { %>
+                <article class="post">
+                    <h3><%= post.title %></h3>
+
+                    <div class="post-info">
+                        By <strong><%= post.creator_name %></strong>
+                        · <%= new Date(post.date_created).toLocaleString() %>
+                    </div>
+
+                    <p class="post-content"><%= post.body %></p>
+
+                    <% if (user && user.user_id === post.creator_user_id) { %>
+                        <div class="post-actions">
+                            <a href="/posts/edit/<%= post.blog_id %>"
+                               class="edit-button">Edit</a>
+
+                            <form action="/posts/delete/<%= post.blog_id %>"
+                                  method="POST" class="inline-form">
+                                <button type="submit" class="delete-button"
+                                    onclick="return confirm('Are you sure you want to delete this post?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    <% } %>
+                </article>
+            <% }) %>
+        </section>
+    </main>
+
+    <footer>
+        <p>Blog Application • Node.js + Express + EJS + PostgreSQL</p>
+    </footer>
+</body>
+</html>

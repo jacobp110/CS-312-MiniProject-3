@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | My Blog</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome Back</h1>
+        <p>Sign in to manage your blog posts.</p>
+    </header>
+
+    <main>
+        <section class="create-section">
+            <h2>Sign In</h2>
+
+            <% if (message) { %>
+                <p class="success-message"><%= message %></p>
+            <% } %>
+
+            <% if (error) { %>
+                <p class="error-message"><%= error %></p>
+            <% } %>
+
+            <form action="/login" method="POST">
+                <label for="user_id">User ID</label>
+                <input type="text" id="user_id" name="user_id"
+                       maxlength="255" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       required>
+
+                <button type="submit" class="create-button">
+                    Sign In
+                </button>
+            </form>
+
+            <p class="auth-link">
+                Don't have an account? <a href="/signup">Sign up</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Blog Application • Node.js + Express + EJS</p>
+    </footer>
+</body>
+</html>
